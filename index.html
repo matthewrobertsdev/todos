@@ -1,0 +1,76 @@
+<!--doc type-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<!--html-->
+<html>
+
+<!--head-->
+
+<head>
+</head>
+
+<!--body-->
+
+<body>
+  <!--text input-->
+  <input id='textInput' />
+  <!--add button-->
+  <button id='addButton'>Add</button>
+  <!--todo list-->
+  <ul id='todoList'>
+
+  </ul>
+</body>
+<!--script in body-->
+<script>
+  //array for todos
+  let toDos = []
+  //get todo unordered list
+  let toDoList = document.getElementById("todoList")
+  //get add button
+  let addButton = document.getElementById('addButton')
+  //on click that runs when button is clicked
+  addButton.onclick = () => {
+    console.log("addButton clicked")
+    //get text input
+    let textInput = document.getElementById("textInput")
+    //add text to to dos
+    toDos.push(textInput.value)
+    makeToDos()
+  }
+  function makeToDos() {
+    console.log('make toDoList')
+    //erase inner html
+    toDoList.innerHTML = ''
+    //loop through and assign to inner html
+    for (let i = 0; i < toDos.length; i++) {
+      console.log(i)
+      const todoHTML =
+        `<li>
+      <input type='checkbox'/>
+      ${toDos[i]}
+      <button id='toDo-${i}'>
+        Delete
+      </button>
+    </li>`
+      console.log(todoHTML)
+      toDoList.innerHTML += todoHTML
+      var deleteButton= document.getElementById(`toDo-${i}`)
+      deleteButton.onclick = () => {
+        console.log(`delete toDo-${i}`)
+        let newToDos = []
+        for (let j = 0; j < toDos.length; j++) {
+          if (j !== i) {
+            console.log(`added${j}`)
+            newToDos.push(toDos[j])
+          }
+        }
+        toDos = newToDos
+        makeToDos()
+      }
+      console.log(deleteButton.onclick)
+    }
+  }
+</script>
+
+</html>
