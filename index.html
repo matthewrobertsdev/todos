@@ -39,12 +39,12 @@
     makeToDos()
   }
   function makeToDos() {
-    console.log('make toDoList')
+    //console.log('make toDoList')
     //erase inner html
     toDoList.innerHTML = ''
     //loop through and assign to inner html
     for (let i = 0; i < toDos.length; i++) {
-      console.log(i)
+      //console.log(i)
       const todoHTML =
         `<li>
       <input type='checkbox'/>
@@ -53,23 +53,26 @@
         Delete
       </button>
     </li>`
-      console.log(todoHTML)
+      //console.log(todoHTML)
       toDoList.innerHTML += todoHTML
-      var deleteButton= document.getElementById(`toDo-${i}`)
+    }
+    for (let i = 0; i < toDos.length; i++) {
+      let deleteButton = document.getElementById(`toDo-${i}`)
+      console.log(`delete toDo-${i}`)
       deleteButton.onclick = () => {
-        console.log(`delete toDo-${i}`)
+        //console.log(`delete toDo-${i}`)
         let newToDos = []
         for (let j = 0; j < toDos.length; j++) {
           if (j !== i) {
-            console.log(`added${j}`)
+            //console.log(`added${j}`)
             newToDos.push(toDos[j])
           }
         }
         toDos = newToDos
         makeToDos()
       }
-      console.log(deleteButton.onclick)
     }
+    //console.log(deleteButton.onclick)
   }
 </script>
 
