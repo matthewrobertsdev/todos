@@ -19,10 +19,13 @@
 
   </ul>
 </body>
+
 <!--script in body-->
 <script>
   //array for todos
   let toDos = []
+  //parallel checks array
+  let checks=[]
   //get todo unordered list
   let toDoList = document.getElementById("todoList")
   //get add button
@@ -33,9 +36,14 @@
     let textInput = document.getElementById("textInput")
     //add text to to dos
     toDos.push(textInput.value)
+    //start check as false
+    checks.push(false)
+    //clear text input
+    textInput.value=''
     //create inner html for todos
     makeToDos()
   }
+
   //create inner html for todos
   function makeToDos() {
     //erase inner html
@@ -45,7 +53,7 @@
       //html for an individual todo
       const todoHTML =
         `<li>
-      <input type='checkbox'/>
+      <input type='checkbox' id='check-toDo-${i}' />
       ${toDos[i]}
       <button id='delete-toDo-${i}'>
         Delete
@@ -53,21 +61,37 @@
     </li>`
       toDoList.innerHTML += todoHTML
     }
+    //loop through andc assign checked state using checks state
+    for (let i = 0; i < toDos.length; i++) {
+      let checkbox = document.getElementById(`check-toDo-${i}`)
+      checkbox.checked=checks[i]
+    }
+    //loop through and add onclick check arrow function
+    for (let i = 0; i < toDos.length; i++) {
+      let checkbox = document.getElementById(`check-toDo-${i}`)
+      //check action
+      checkbox.onclick = () => {
+        checks[i]=checkbox.checked;
+        }
+      }
     //loop through and add onclick delete arrow function
     for (let i = 0; i < toDos.length; i++) {
       //get delete button with index
       let deleteButton = document.getElementById(`delete-toDo-${i}`)
       //delete action
       deleteButton.onclick = () => {
-        //rebuild todos without todo with index
+        //rebuild todos without todo with index & rebuild checks without checks with index
         let newToDos = []
+        let newChecks=[]
         for (let j = 0; j < toDos.length; j++) {
           if (j !== i) {
             newToDos.push(toDos[j])
+            newChecks.push(checks[j])
           }
         }
-        //assign the rebuilt todo array to the original todo array
+        //assign the rebuilt todo array to the original todo array and the same for the checks
         toDos = newToDos
+        checks=newChecks
         //create inner html for todos now that todo array is different
         makeToDos()
       }
