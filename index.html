@@ -34,10 +34,8 @@
   addButton.onclick = () => {
     //get text input
     let textInput = document.getElementById("textInput")
-    //add text to to dos
-    toDos.push(textInput.value)
-    //start check as false
-    checks.push(false)
+    //add text to to dos, start check as false
+    toDos.push({text: textInput.value, checked: false})
     //clear text input
     textInput.value=''
     //create inner html for todos
@@ -54,7 +52,7 @@
       const todoHTML =
         `<li>
       <input type='checkbox' id='check-toDo-${i}' />
-      ${toDos[i]}
+      ${toDos[i].text}
       <button id='delete-toDo-${i}'>
         Delete
       </button>
@@ -64,14 +62,14 @@
     //loop through andc assign checked state using checks state
     for (let i = 0; i < toDos.length; i++) {
       let checkbox = document.getElementById(`check-toDo-${i}`)
-      checkbox.checked=checks[i]
+      checkbox.checked=toDos[i].checked
     }
     //loop through and add onclick check arrow function
     for (let i = 0; i < toDos.length; i++) {
       let checkbox = document.getElementById(`check-toDo-${i}`)
       //check action
       checkbox.onclick = () => {
-        checks[i]=checkbox.checked;
+        toDos[i].checked=checkbox.checked;
         }
       }
     //loop through and add onclick delete arrow function
@@ -82,16 +80,13 @@
       deleteButton.onclick = () => {
         //rebuild todos without todo with index & rebuild checks without checks with index
         let newToDos = []
-        let newChecks=[]
         for (let j = 0; j < toDos.length; j++) {
           if (j !== i) {
             newToDos.push(toDos[j])
-            newChecks.push(checks[j])
           }
         }
         //assign the rebuilt todo array to the original todo array and the same for the checks
         toDos = newToDos
-        checks=newChecks
         //create inner html for todos now that todo array is different
         makeToDos()
       }
